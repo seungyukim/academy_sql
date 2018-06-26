@@ -1,14 +1,14 @@
 -- SQL day01
--- 1. SCOTT °èÁ¤ È°¼ºÈ­ : sys °èÁ¤À¸·Î Á¢¼ÓÇÏ¿© ½ºÅ©¸³Æ® ½ÇÇà
+-- 1. SCOTT ê³„ì • í™œì„±í™” : sys ê³„ì •ìœ¼ë¡œ ì ‘ì†í•˜ì—¬ ìŠ¤í¬ë¦½íŠ¸ ì‹¤í–‰
 @C:\oraclexe\app\oracle\product\11.2.0\server\rdbms\admin\scott.sql
--- 2. Á¢¼Ó À¯Àú È®ÀÎ ¸í·É
+-- 2. ì ‘ì† ìœ ì € í™•ì¸ ëª…ë ¹
 show user
--- 3. HR °èÁ¤ È°¼ºÈ­ : sys °èÁ¤À¸·Î Á¢¼ÓÇÏ¿© 
---                   ´Ù¸¥ »ç¿ëÀÚ È®Àå ÈÄ HR °èÁ¤ÀÇ
---                   °èÁ¤Àá½É, ºñ¹Ð¹øÈ£ ¸¸·á »óÅÂ ÇØÁ¦
+-- 3. HR ê³„ì • í™œì„±í™” : sys ê³„ì •ìœ¼ë¡œ ì ‘ì†í•˜ì—¬ 
+--                   ë‹¤ë¥¸ ì‚¬ìš©ìž í™•ìž¥ í›„ HR ê³„ì •ì˜
+--                   ê³„ì •ìž ì‹¬, ë¹„ë°€ë²ˆí˜¸ ë§Œë£Œ ìƒíƒœ í•´ì œ
 --------------------------------------------------------------------                        
--- SCOTT °èÁ¤ÀÇ µ¥ÀÌÅÍ ±¸Á¶
--- (1) EMP Å×ÀÌºí ³»¿ë Á¶È¸
+-- SCOTT ê³„ì •ì˜ ë°ì´í„° êµ¬ì¡°
+-- (1) EMP í…Œì´ë¸” ë‚´ìš© ì¡°íšŒ
 SELECT * 
   FROM EMP
 ; 
@@ -28,7 +28,7 @@ EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO
 7902	FORD	ANALYST	    7566	81/12/03	3000		    20
 7934	MILLER	CLERK	    7782	82/01/23	1300		    10
 ----------------------------------------------------------------- */
--- (2) DEPT Å×ÀÌºí ³»¿ë Á¶È¸
+-- (2) DEPT í…Œì´ë¸” ë‚´ìš© ì¡°íšŒ
 SELECT *
   FROM DEPT
 ;
@@ -40,7 +40,7 @@ DEPTNO, DNAME, LOC
 30	SALES	    CHICAGO
 40	OPERATIONS	BOSTON
 ------------------------ */
--- (3) SELGRADE Å×ÀÌºí ³»¿ë Á¶È¸
+-- (3) SELGRADE í…Œì´ë¸” ë‚´ìš© ì¡°íšŒ
 SELECT *
   FROM salgrade
 ;
@@ -55,15 +55,15 @@ GRADE, LOSAL, HISAL
 ----------------- */
 
 -- 01. DQL : SELECT
--- (1) SELECT ±¸¹®
--- emp Å×ÀÌºí¿¡¼­ »ç¹ø, ÀÌ¸§, Á÷¹«¸¦ Á¶È¸
+-- (1) SELECT êµ¬ë¬¸
+-- emp í…Œì´ë¸”ì—ì„œ ì‚¬ë²ˆ, ì´ë¦„, ì§ë¬´ë¥¼ ì¡°íšŒ
 SELECT e.EMPNO
       ,e.ENAME
       ,e.JOB
-  FROM emp e --¼Ò¹®ÀÚ e´Â alias(º°Äª)
+  FROM emp e --ì†Œë¬¸ìž eëŠ” alias(ë³„ì¹­)
 ;
 
--- emp Å×ÀÌºí¿¡¼­ Á÷¹«¸¸ Á¶È¸
+-- emp í…Œì´ë¸”ì—ì„œ ì§ë¬´ë§Œ ì¡°íšŒ
 SELECT e.JOB
   FROM emp e
 ;
@@ -83,8 +83,8 @@ ANALYST
 CLERK
 --------- */
 
--- (2) DISTINCT ¹® : SELECT ¹® »ç¿ë½Ã Áßº¹À» ¹èÁ¦ÇÏ¿© Á¶È¸
--- emp Å×ÀÌºí¿¡¼­ job ÄÃ·³ÀÇ Áßº¹À» ¹èÁ¦ÇÏ¿© Á¶È¸
+-- (2) DISTINCT ë¬¸ : SELECT ë¬¸ ì‚¬ìš©ì‹œ ì¤‘ë³µì„ ë°°ì œí•˜ì—¬ ì¡°íšŒ
+-- emp í…Œì´ë¸”ì—ì„œ job ì»¬ëŸ¼ì˜ ì¤‘ë³µì„ ë°°ì œí•˜ì—¬ ì¡°íšŒ
 SELECT DISTINCT e.JOB
   FROM emp e
 ;
@@ -97,8 +97,8 @@ MANAGER
 ANALYST
 --------- */
 
--- * SQL SELECT ±¸¹®ÀÇ ÀÛµ¿ ¿ø¸® : Å×ÀÌºíÀÇ ÇÑ ÇàÀ» ±âº» ´ÜÀ§·Î ½ÇÇàÇÔ.
---                               Å×ÀÌºí ÇàÀÇ °³¼ö¸¸Å­ ¹Ýº¹ ½ÇÇà.
+-- * SQL SELECT êµ¬ë¬¸ì˜ ìž‘ë™ ì›ë¦¬ : í…Œì´ë¸”ì˜ í•œ í–‰ì„ ê¸°ë³¸ ë‹¨ìœ„ë¡œ ì‹¤í–‰í•¨.
+--                               í…Œì´ë¸” í–‰ì˜ ê°œìˆ˜ë§Œí¼ ë°˜ë³µ ì‹¤í–‰.
 SELECT 'Hello, SQL~'
   FROM emp e
 ;
@@ -118,7 +118,7 @@ Hello, SQL~
 Hello, SQL~
 --------- */
 
--- emp Å×ÀÌºí¿¡¼­ job, deptno ¿¡ ´ëÇØ Áßº¹À» Á¦°ÅÇÏ¿© Á¶È¸
+-- emp í…Œì´ë¸”ì—ì„œ job, deptno ì— ëŒ€í•´ ì¤‘ë³µì„ ì œê±°í•˜ì—¬ ì¡°íšŒ
 SELECT DISTINCT e.JOB
                ,e.DEPTNO
   FROM emp e
@@ -136,8 +136,8 @@ CLERK	    30
 CLERK	    20
 ------------ */
 
--- (3) ORDER BY Àý : Á¤·Ä
--- emp Å×ÀÌºí¿¡¼­ jobÀ» Áßº¹¹èÁ¦ÇÏ¿© Á¶È¸ÇÏ°í °á°ú´Â ¿À¸§Â÷¼øÀ¸·Î Á¤·Ä
+-- (3) ORDER BY ì ˆ : ì •ë ¬
+-- emp í…Œì´ë¸”ì—ì„œ jobì„ ì¤‘ë³µë°°ì œí•˜ì—¬ ì¡°íšŒí•˜ê³  ê²°ê³¼ëŠ” ì˜¤ë¦„ì°¨ìˆœìœ¼ë¡œ ì •ë ¬
 SELECT DISTINCT e.JOB
   FROM emp e
   ORDER BY e.JOB asc
@@ -151,7 +151,7 @@ PRESIDENT
 SALESMAN
 --------- */
 
--- emp Å×ÀÌºí¿¡¼­ job À» Áßº¹¹èÁ¦ÇÏ¿© Á¶È¸ÇÏ°í ³»¸²Â÷¼øÀ¸·Î Á¤·Ä
+-- emp í…Œì´ë¸”ì—ì„œ job ì„ ì¤‘ë³µë°°ì œí•˜ì—¬ ì¡°íšŒí•˜ê³  ë‚´ë¦¼ì°¨ìˆœìœ¼ë¡œ ì •ë ¬
 SELECT DISTINCT e.JOB
   FROM emp e
   ORDER BY e.JOB DESC
@@ -165,8 +165,8 @@ CLERK
 ANALYST
 --------- */
 
--- 7) emp Å×ÀÌºí¿¡¼­ comm À» °¡Àå ¸¹ÀÌ ¹Þ´Â ¼ø¼­´ë·Î Ãâ·Â
---    »ç¹ø, ÀÌ¸§, Á÷¹«, ÀÔ»çÀÏ, Ä¿¹Ì¼Ç ¼øÀ¸·Î Á¶È¸
+-- 7) emp í…Œì´ë¸”ì—ì„œ comm ì„ ê°€ìž¥ ë§Žì´ ë°›ëŠ” ìˆœì„œëŒ€ë¡œ ì¶œë ¥
+--    ì‚¬ë²ˆ, ì´ë¦„, ì§ë¬´, ìž…ì‚¬ì¼, ì»¤ë¯¸ì…˜ ìˆœìœ¼ë¡œ ì¡°íšŒ
 SELECT e.EMPNO
       ,e.ENAME
       ,e.JOB
@@ -191,8 +191,8 @@ SELECT e.EMPNO
 7844	TURNER	SALESMAN	81/09/08	0
 ------------------------------------------ */
 
--- 8) emp Å×ÀÌºí¿¡¼­ comm ÀÌ ÀûÀº ¼ø¼­´ë·Î, Á÷¹«º° ¿À¸§Â÷¼ø, ÀÌ¸§º° ¿À¸§Â÷¼øÀ¸·Î Á¶È¸
---    »ç¹ø, ÀÌ¸§, Á÷¹«, ÀÔ»çÀÏ, Ä¿¹Ì¼ÇÀ» Á¶È¸
+-- 8) emp í…Œì´ë¸”ì—ì„œ comm ì´ ì ì€ ìˆœì„œëŒ€ë¡œ, ì§ë¬´ë³„ ì˜¤ë¦„ì°¨ìˆœ, ì´ë¦„ë³„ ì˜¤ë¦„ì°¨ìˆœìœ¼ë¡œ ì¡°íšŒ
+--    ì‚¬ë²ˆ, ì´ë¦„, ì§ë¬´, ìž…ì‚¬ì¼, ì»¤ë¯¸ì…˜ì„ ì¡°íšŒ
 SELECT e.EMPNO
       ,e.ENAME
       ,e.JOB
@@ -217,8 +217,8 @@ SELECT e.EMPNO
 7839	KING	PRESIDENT	81/11/17	
 --------------------------------------------- */
 
--- 9) emp Å×ÀÌºí¿¡¼­ comm ÀÌ ÀûÀº ¼ø¼­´ë·Î, Á÷¹«º° ¿À¸§Â÷¼ø, ÀÌ¸§º° ³»¸²Â÷¼øÀ¸·Î Á¤·Ä
---    »ç¹ø, ÀÌ¸§, Á÷¹«, ÀÔ»çÀÏ, Ä¿¹Ì¼ÇÀ» Á¶È¸
+-- 9) emp í…Œì´ë¸”ì—ì„œ comm ì´ ì ì€ ìˆœì„œëŒ€ë¡œ, ì§ë¬´ë³„ ì˜¤ë¦„ì°¨ìˆœ, ì´ë¦„ë³„ ë‚´ë¦¼ì°¨ìˆœìœ¼ë¡œ ì •ë ¬
+--    ì‚¬ë²ˆ, ì´ë¦„, ì§ë¬´, ìž…ì‚¬ì¼, ì»¤ë¯¸ì…˜ì„ ì¡°íšŒ
 SELECT e.EMPNO
       ,e.ENAME
       ,e.JOB
@@ -242,158 +242,3 @@ SELECT e.EMPNO
 7698	BLAKE	MANAGER	    81/05/01	
 7839	KING	PRESIDENT	81/11/17	
 ------------------------------------------ */
-
--- ½Ç½À(1)
-SELECT e.EMPNO
-      ,e.ENAME
-      ,e.JOB
-      ,e.SAL
-  FROM emp e
-  ORDER BY SAL DESC
-;
-
-/* ------------------------------
-7839	KING	PRESIDENT	5000
-7902	FORD	ANALYST	    3000
-7566	JONES	MANAGER	    2975
-7698	BLAKE	MANAGER	    2850
-7782	CLARK	MANAGER	    2450
-7499	ALLEN	SALESMAN	1600
-7844	TURNER	SALESMAN	1500
-7934	MILLER	CLERK	    1300
-7654	MARTIN	SALESMAN	1250
-7521	WARD	SALESMAN	1250
-7900	JAMES	CLERK	    950
-7369	SMITH	CLERK	    800
------------------------------- */
--- ½Ç½À(2)
-SELECT e.EMPNO
-      ,e.ENAME
-      ,e.HIREDATE
-  FROM emp e
-  ORDER BY HIREDATE ASC
-;
-
-/* -----------------------
-7369	SMITH	80/12/17
-7499	ALLEN	81/02/20
-7521	WARD	81/02/22
-7566	JONES	81/04/02
-7698	BLAKE	81/05/01
-7782	CLARK	81/06/09
-7844	TURNER	81/09/08
-7654	MARTIN	81/09/28
-7839	KING	81/11/17
-7900	JAMES	81/12/03
-7902	FORD	81/12/03
-7934	MILLER	82/01/23
------------------------ */
--- ½Ç½À(3)
-SELECT e.EMPNO
-      ,e.ENAME
-      ,e.COMM
-  FROM emp e
-  ORDER BY e.COMM ASC
-;
-
-/* ------------------
-7844	TURNER	0
-7499	ALLEN	300
-7521	WARD	500
-7654	MARTIN	1400
-7839	KING	
-7900	JAMES	
-7902	FORD	
-7782	CLARK	
-7934	MILLER	
-7566	JONES	
-7369	SMITH	
-7698	BLAKE	
------------------- */
--- ½Ç½À(4)
-SELECT e.EMPNO
-      ,e.ENAME
-      ,e.COMM
-  FROM emp e
-  ORDER BY e.COMM DESC
-;
-
-/* -------------------
-7369	SMITH	
-7698	BLAKE	
-7902	FORD	
-7900	JAMES	
-7839	KING	
-7566	JONES	
-7934	MILLER	
-7782	CLARK	
-7654	MARTIN	1400
-7521	WARD	500
-7499	ALLEN	300
-7844	TURNER	0
--------------------- */
--- ½Ç½À(5)
-SELECT e.EMPNO AS "»ç¹ø"
-      ,e.ENAME AS "ÀÌ¸§"
-      ,e.SAL AS "±Þ¿©"
-      ,e.HIREDATE AS "ÀÔ»çÀÏ"
-  FROM emp e
-;
-
-/* ------------------------------
-7369	SMITH	800	    80/12/17
-7499	ALLEN	1600	81/02/20
-7521	WARD	1250	81/02/22
-7566	JONES	2975	81/04/02
-7654	MARTIN	1250	81/09/28
-7698	BLAKE	2850	81/05/01
-7782	CLARK	2450	81/06/09
-7839	KING	5000	81/11/17
-7844	TURNER	1500	81/09/08
-7900	JAMES	950	    81/12/03
-7902	FORD	3000	81/12/03
-7934	MILLER	1300	82/01/23
------------------------------- */
--- ½Ç½À(6)
-SELECT *
-  FROM emp
-;
-
-/* ------------------------------------------------------------------
-7369	SMITH	CLERK	    7902	80/12/17	800		        20
-7499	ALLEN	SALESMAN	7698	81/02/20	1600	300	    30
-7521	WARD	SALESMAN	7698	81/02/22	1250	500	    30
-7566	JONES	MANAGER  	7839	81/04/02	2975		    20
-7654	MARTIN	SALESMAN	7698	81/09/28	1250	1400	30
-7698	BLAKE	MANAGER	    7839	81/05/01	2850		    30
-7782	CLARK	MANAGER	    7839	81/06/09	2450		    10
-7839	KING	PRESIDENT		    81/11/17	5000		    10
-7844	TURNER	SALESMAN	7698	81/09/08	1500	0	    30
-7900	JAMES	CLERK	    7698	81/12/03	950		        30
-7902	FORD	ANALYST	    7566	81/12/03	3000		    20
-7934	MILLER	CLERK	    7782	82/01/23	1300		    10
------------------------------------------------------------------- */
--- ½Ç½À(7)
-SELECT *
-  FROM emp e
-  WHERE e.ENAME = "ALLEN"
-;
--- ½Ç½À(8)
--- ½Ç½À(9)
--- ½Ç½À(10)
--- ½Ç½À(11)
--- ½Ç½À(12)
--- ½Ç½À(13)
--- ½Ç½À(14)
--- ½Ç½À(15)
--- ½Ç½À(16)
--- ½Ç½À(17)
--- ½Ç½À(18)
--- ½Ç½À(19)
--- ½Ç½À(20)
--- ½Ç½À(21)
--- ½Ç½À(22)
--- ½Ç½À(23)
--- ½Ç½À(24)
--- ½Ç½À(25)
--- ½Ç½À(26)
