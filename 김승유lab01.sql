@@ -131,7 +131,7 @@ SELECT *
 -- 실습(7)
 SELECT *
   FROM emp e
-  WHERE e.ENAME = 'ALLEN'
+ WHERE e.ENAME = 'ALLEN'
 ;
 
 /* -------------------------------------------------------------
@@ -142,7 +142,7 @@ SELECT e.EMPNO
       ,e.ENAME
       ,e.DEPTNO
   FROM emp e
-  WHERE e.DEPTNO = 20
+ WHERE e.DEPTNO = 20
 ;
 
 /* -----------------
@@ -156,8 +156,8 @@ SELECT e.EMPNO
       ,e.SAL
       ,e.DEPTNO
   FROM emp e
-  WHERE e.DEPTNO = 20 
-    AND e.SAL < 3000
+ WHERE e.DEPTNO = 20 
+   AND e.SAL < 3000
 ;
 
 /* -------------------------
@@ -213,8 +213,8 @@ SELECT e.EMPNO
       ,e.SAL
       ,e.COMM
   FROM emp e
-  WHERE e.ENAME = 'MARTIN' 
-     OR e.ENAME ='BLAKE'
+ WHERE e.ENAME = 'MARTIN' 
+    OR e.ENAME ='BLAKE'
 ;
 
 /* ---------------------------------------
@@ -227,8 +227,8 @@ SELECT e.EMPNO
       ,e.JOB
       ,e.SAL + e.COMM as "급여와 커미션 합"
   FROM emp e
-  WHERE e.ENAME = 'MARTIN' 
-     OR e.ENAME ='BLAKE'
+ WHERE e.ENAME = 'MARTIN' 
+    OR e.ENAME ='BLAKE'
 ;
 
 /* ------------------------------
@@ -238,7 +238,7 @@ SELECT e.EMPNO
 -- 실습(14)
 SELECT *
   FROM emp e
-  WHERE NOT e.COMM = 0
+ WHERE NOT e.COMM = 0
 ;
 
 /* ----------------------------------------------------------------
@@ -249,7 +249,7 @@ SELECT *
 -- 실습(15)
 SELECT * 
   FROM emp e
-  WHERE e.COMM IS NOT NULL
+ WHERE e.COMM IS NOT NULL
 ;
 
 /* ----------------------------------------------------------------
@@ -272,7 +272,7 @@ SELECT *
 -- 실습(17)
 SELECT *
   FROM emp e
-  WHERE e.JOB = 'MANAGER' OR 
+ WHERE e.JOB = 'MANAGER' OR 
         e.DEPTNO = 10
 ;
 
@@ -313,7 +313,7 @@ SELECT *
 -- 실습(20)
 SELECT *
   FROM emp e
-  WHERE e.ENAME LIKE '%A%'
+ WHERE e.ENAME LIKE '%A%'
 ;
 
 /* ----------------------------------------------------------------
@@ -327,7 +327,7 @@ SELECT *
 -- 실습(21)
 SELECT *
   FROM emp e
-  WHERE e.ENAME LIKE '%S'
+ WHERE e.ENAME LIKE '%S'
 ;
 
 /* ---------------------------------------------------------------
@@ -350,7 +350,7 @@ SELECT *
 -- 실습(23)
 SELECT *
   FROM emp e
-  WHERE e.SAL 
+ WHERE e.SAL 
     BETWEEN 2500 
     AND 3000
 ;
@@ -363,7 +363,7 @@ SELECT *
 -- 실습(24)
 SELECT *
   FROM emp e
-  WHERE e.COMM IS NULL
+ WHERE e.COMM IS NULL
 ;
 
 /* ---------------------------------------------------------
@@ -379,7 +379,7 @@ SELECT *
 -- 실습(25)
 SELECT *
   FROM emp e
-  WHERE e.COMM IS NOT NULL
+ WHERE e.COMM IS NOT NULL
 ;
 
 /* ------------------------------------------------------------------
