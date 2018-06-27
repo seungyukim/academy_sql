@@ -350,9 +350,7 @@ SELECT *
 -- 실습(23)
 SELECT *
   FROM emp e
- WHERE e.SAL 
-    BETWEEN 2500 
-    AND 3000
+ WHERE e.SAL BETWEEN 2500 AND 3000
 ;
 
 /* ---------------------------------------------------------
