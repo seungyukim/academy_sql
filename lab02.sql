@@ -147,3 +147,73 @@ SELECT LENGTHB('김승유')
 ; -- 9
 
 -- 실습 6)
+SELECT CONCAT('SQL', '배우기') FROM dual; -- SQL배우기
+
+-- 실습 7)
+SELECT SUBSTR('SQL 배우기', 5, 2) FROM dual; -- 배우
+
+-- 실습 8)
+SELECT LPAD('SQL', 7, '$') FROM dual; -- $$$$SQL
+
+-- 실습 9)
+SELECT RPAD('SQL', 7, '$') FROM dual; -- SQL$$$$
+
+-- 실습 10)
+SELECT LTRIM('   sql 배우기    ') FROM dual; -- sql 배우기    
+
+-- 실습 11)
+SELECT RTRIM('   sql 배우기    ') FROM dual; --    sql 배우기
+
+-- 실습 12)
+SELECT TRIM('   sql 배우기    ') FROM dual;  -- sql 배우기
+
+-- 실습 13)
+SELECT e.EMPNO
+      ,e.ENAME
+      ,e.SAL
+      ,NVL(e.COMM, 0)
+  FROM emp e
+;
+
+/*
+7369	SMITH	800	    0
+7499	ALLEN	1600	300
+7521	WARD	1250	500
+7566	JONES	2975	0
+7654	MARTIN	1250	1400
+7698	BLAKE	2850	0
+7782	CLARK	2450	0
+7839	KING	5000	0
+7844	TURNER	1500	0
+7900	JAMES	950	    0
+7902	FORD	3000	0
+7934	MILLER	1300	0
+9999	J_JUNE	500	    0
+8888	J	    400	    0
+7777	J%JONES	300	    0
+*/
+
+-- 실습 14)
+SELECT e.EMPNO
+      ,e.ENAME
+      ,NVL2(e.COMM, (e.SAL + e.COMM), 0) as "급여 + 커미션"
+  FROM emp e
+;
+
+/*
+7369	SMITH	0
+7499	ALLEN	1900
+7521	WARD	1750
+7566	JONES	0
+7654	MARTIN	2650
+7698	BLAKE	0
+7782	CLARK	0
+7839	KING	0
+7844	TURNER	1500
+7900	JAMES	0
+7902	FORD	0
+7934	MILLER	0
+9999	J_JUNE	0
+8888	J	0
+7777	J%JONES	0
+*/
