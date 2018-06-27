@@ -110,3 +110,108 @@ SELECT '오늘의 날짜는 ' || sysdate || '입니다.' as "오늘의 날짜"
 SELECT '안녕하세요. ' || e.ENAME || '씨, 당신의 사번은 ' || e.EMPNO || '입니다.' as "사번 알리미"
   FROM emp e
 ;
+
+--- 4) 데이터 타입 변환 함수
+/*
+  TO_CHAR()    : 숫자, 날짜 ==> 문자
+  TO_DATE()    : 날짜 형식의 문자 ===> 날짜
+  TO_NUMBER()  : 숫자로만 구성된 문자데이터 ===> 숫자
+*/
+
+---- 1. TO_CHAR() : 숫자패턴 적용
+--    숫자패턴 : 9 ==> 한자리 숫자
+SELECT TO_CHAR(12345, '9999') FROM dual; -- #####
+SELECT TO_CHAR(12345, '99999') FROM dual; --  12345
+
+SELECT e.EMPNO
+      ,e.SAL as 숫자
+      ,TO_CHAR(e.SAL) as 문자
+  FROM emp e
+;
+
+SELECT TO_CHAR(12345, '99999999') data
+  FROM dual; --     12345
+-- 앞에 빈칸을 0으로 채우기
+SELECT TO_CHAR(12345, '09999999') data
+  FROM dual; --  00012345
+-- 소수점 이하 표현  
+SELECT TO_CHAR(12345, '99999999.99') data
+  FROM dual; --     12345.00
+-- 숫자 패턴에서 3자리씩 끊어 읽기 + 소수점 이하 표현 
+SELECT TO_CHAR(12345, '9,999,999.99') data
+  FROM dual; --     12,345.00
+  
+---- 2. TO_DATE() 날짜 패턴에 맞는 문자 값을 날짜 데이터로 변경
+SELECT TO_DATE('2018-06-27', 'YYYY-MM-DD') today FROM dual; -- 18/06/27
+SELECT '2018-06-27' today FROM dual; -- 2018-06-27
+
+SELECT TO_DATE('2018-06-27', 'YYYY-MM-DD') + 10 today FROM dual; -- 날짜 연산 가능
+SELECT '2018-06-27' + 10 today FROM dual;
+--ORA-01722: invalid number ==> '2018-06-27' 문자 + 숫자 10의 연산 불가능
+
+---- 3. TO_NUMBER() : 오라클이 자동 형변환을 제공하므로 자주 사용은 안됨
+SELECT '1000' + 10 resul FROM dual;
+SELECT TO_NUMBER('1000') + 10 result FROM dual;
+
+--- 5) DECODE(expr, search, result [,search, result]..[, default])
+/*
+   만약에 default 가 설정이 안되었고
+   expr 과 일치하는 search가 없는 경우 null 을 리턴
+*/
+SELECT DECODE('YES' -- expr
+             ,'YES', '입력값이 YES 입니다.' -- search, result 세트1
+             ,'NO', '입력값이 NO 입니다.'   -- search, result 세트2
+             ) as result
+  FROM dual
+; -- 입력값이 YES 입니다.
+
+SELECT DECODE('NO' -- expr
+             ,'YES', '입력값이 YES 입니다.' -- search, result 세트1
+             ,'NO', '입력값이 NO 입니다.'   -- search, result 세트2
+             ) as result
+  FROM dual
+; -- 입력값이 NO 입니다.
+
+SELECT DECODE('YY' -- expr
+             ,'YES', '입력값이 YES 입니다.' -- search, result 세트1
+             ,'NO', '입력값이 NO 입니다.'   -- search, result 세트2
+             ) as result
+  FROM dual
+;
+-- >> expr 과 일치하는 search 가 없고, default 설정도 안되었을 때
+--    결과가 <인출된 모든 행 : 0> 이 아닌 NULL 이라는 것 확인
+
+SELECT DECODE('예' -- expr
+             ,'YES', '입력값이 YES 입니다.' -- search, result 세트1
+             ,'NO', '입력값이 NO 입니다.'   -- search, result 세트2
+             ,'입력값이 YES/NO 중 어느 것도 아닙니다.') as result
+  FROM dual
+; -- 입력값이 YES/NO 중 어느 것도 아닙니다.
+
+-- emp 테이블의 hiredate 의 입사년도를 추출하여 몇년 근무했는지를 계산
+-- 장기근속 여부를 판단
+-- 1) 입사년도 추출 : 날짜 패턴
+SELECT e.EMPNO
+      ,e.ENAME
+      ,TO_CHAR(e.HIREDATE, 'YYYY') hireyear
+  FROM emp e
+;
+-- 2) 몇년근무 판단 : 오늘 시스템 날짜와 연산
+SELECT e.EMPNO
+      ,e.ENAME
+      ,TO_CHAR(sysdate, 'YYYY') - TO_CHAR(e.HIREDATE, 'YYYY') || '년' "근무햇수"
+  FROM emp e
+;
+
+-- 3) 37년 이상 된 직원을 장기 근속으로 판단
+SELECT a.EMPNO
+      ,a.ENAME
+      ,DECODE(a.workingyear -- expr
+             ,37, '장기 근속자 입니다.' -- search, result1
+             ,38, '장기 근속자 입니다.' -- search, result2
+             ,'장기 근속자가 아닙니다.') as "장기 근속 여부" -- default
+  FROM (SELECT e.EMPNO
+              ,e.ENAME
+              ,TO_CHAR(sysdate, 'YYYY') - TO_CHAR(e.HIREDATE, 'YYYY') workingyear
+          FROM emp e) a
+;
