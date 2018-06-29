@@ -56,3 +56,95 @@ J	    CLERK
 J%JONES	CLERK
 */
 
+-- 실습 1)
+DROP TABLE customer;
+CREATE TABLE customer
+( userid     VARCHAR2(4)
+ ,name       VARCHAR2(30) NOT NULL
+ ,birthyear  NUMBER(4)
+ ,regdate    DATE         DEFAULT sysdate
+ ,address    VARCHAR2(30)
+ ,CONSTRAINT pk_customer PRIMARY KEY (userid)
+);
+
+-- 실습 2)
+DESC customer;
+/*
+이름        널?       유형           
+--------- -------- ------------ 
+USERID    NOT NULL VARCHAR2(4)  
+NAME      NOT NULL VARCHAR2(30) 
+BIRTHYEAR          NUMBER(4)    
+REGDATE            DATE         
+ADDRESS            VARCHAR2(30) 
+*/
+
+
+-- 실습 3)
+DROP TABLE new_cust;
+CREATE TABLE new_cust
+AS
+SELECT *
+  FROM customer
+ WHERE 1 = 2
+;
+
+-- 실습 4)
+DESC new_cust;
+/*
+이름        널?       유형           
+--------- -------- ------------ 
+USERID             VARCHAR2(4)  
+NAME      NOT NULL VARCHAR2(30) 
+BIRTHYEAR          NUMBER(4)    
+REGDATE            DATE         
+ADDRESS            VARCHAR2(30) 
+*/
+
+-- 실습 5)
+DROP TABLE salesman;
+CREATE TABLE salesman
+AS
+SELECT *
+  FROM emp e
+ WHERE e.JOB = 'SALESMAN'
+;
+
+-- 실습 6)
+SELECT *
+  FROM salesman
+;
+/*
+7499	ALLEN	SALESMAN	7698	81/02/20	1600	300	    30
+7521	WARD	SALESMAN	7698	81/02/22	1250	500	    30
+7654	MARTIN	SALESMAN	7698	81/09/28	1250	1400	30
+7844	TURNER	SALESMAN	7698	81/09/08	1500	0	    30
+*/
+
+-- 실습 7)
+ALTER TABLE customer ADD 
+( phone VARCHAR2(11)
+ ,grade VARCHAR2(30)
+ ,CONSTRAINT ck_customer_grade CHECK (grade IN ('VIP','GOLD','SILVER'))
+);
+
+-- 실습 8)
+ALTER TABLE customer DROP COLUMN grade;
+
+-- 실습 9)
+ALTER TABLE customer MODIFY phone VARCHAR2(4)
+                     MODIFY userid NUMBER(4)
+;
+ALTER TABLE customer MODIFY userid VARCHAR2(30);        
+DESC customer;
+/*
+이름        널?       유형           
+--------- -------- ------------ 
+USERID    NOT NULL VARCHAR2(30) 
+NAME      NOT NULL VARCHAR2(30) 
+BIRTHYEAR          NUMBER(4)    
+REGDATE            DATE         
+ADDRESS            VARCHAR2(30) 
+PHONE              VARCHAR2(4)  
+*/
+
