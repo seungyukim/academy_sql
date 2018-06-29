@@ -38,7 +38,7 @@ PR_REP	    Public Relations Representative
        ,e.LAST_NAME "라스트네임"
        ,e.SALARY "급여"
        ,nvl(e.COMMISSION_PCT,0) "커미션 팩터"
-       ,e.SALARY * nvl(e.COMMISSION_PCT,0) 
+       ,e.SALARY * nvl(e.COMMISSION_PCT,0) "급여 x 커미션팩터"
   FROM employees e
 ;
 
@@ -49,8 +49,9 @@ SELECT e.EMPLOYEE_ID "사번"
       ,e.LAST_NAME "라스트네임"
       ,e.SALARY "급여"
       ,nvl(e.COMMISSION_PCT,0) "커미션 팩터"
+      ,e.HIRE_DATE
   FROM employees e
- WHERE e.HIREDATE  
+ WHERE TO_CHAR(e.HIRE_DATE,'YYYY') >= '2007' 
 ;
 
 --4. Finance 부서에 소속된 직원의 목록 조회
@@ -94,16 +95,42 @@ SELECT e.EMPLOYEE_ID
 --14건
 -- 조인 이용
 
-
 -- 서브쿼리 이용
+SELECT e.EMPLOYEE_ID
+      ,e.FIRST_NAME
+      ,e.LAST_NAME
+  FROM employees e
+ WHERE e.MANAGER_ID = (SELECT e.EMPLOYEE_ID
+                         FROM employees e
+                        WHERE e.FIRST_NAME = 'Steven'
+                          AND e.LAST_NAME = 'King' )
+;
  
 --6. Steven King의 직속 부하직원 중에서 Commission_pct 값이 null이 아닌 직원 목록
 --5건
+SELECT e.EMPLOYEE_ID
+      ,e.FIRST_NAME
+      ,e.LAST_NAME
+      ,e.COMMISSION_PCT
+  FROM employees e
+ WHERE e.MANAGER_ID = (SELECT e.EMPLOYEE_ID
+                         FROM employees e
+                        WHERE e.FIRST_NAME = 'Steven'
+                          AND e.LAST_NAME = 'King' )
+   AND  e.COMMISSION_PCT IS NOT NULL
+;
 
 --7. 각 job 별 최대급여를 구하여 출력 job_id, job_title, job별 최대급여 조회
 --19건
-
-
+SELECT e.JOB_ID
+      ,j.JOB_TITLE
+      
+  FROM employees e JOIN jobs j USING(JOB_ID)
+ WHERE (e.JOB_ID, e.SALARY) IN (SELECT e.JOB_ID
+                                      ,MAX(e.SALARY) "최대 급여"
+                                  FROM employees e
+                                 GROUP BY e.JOB_ID
+;
  
 --8. 각 Job 별 최대급여를 받는 사람의 정보를 출력,
 --  급여가 높은 순서로 출력
@@ -132,11 +159,11 @@ SELECT e.EMPLOYEE_ID
 
 
 --14. employees 테이블이 각 job_id 별 인원수와 job_title을 같이 출력하고 job_id 오름차순 정렬
-
+--19건
 
 --15. employees 테이블의 job_id별 최저급여,
 --   최대급여를 job_title과 함께 출력 job_id 알파벳순 오름차순 정렬
-
+--19건
 
  
 --16. Employees 테이블에서 인원수가 가장 많은 job_id를 구하고
@@ -148,23 +175,23 @@ SELECT e.EMPLOYEE_ID
 --17.사번,last_name, 급여, 직책이름(job_title), 부서명(department_name), 부서매니저이름
 --  부서 위치 도시(city), 나라(country_name), 지역(region_name) 을 출력
 ----------- 부서가 배정되지 않은 인원 고려 ------
-
+--107건
 
 --18.부서 아이디, 부서명, 부서에 속한 인원숫자를 출력
-
+--27건
 
 
 --19.인원이 가장 많은 상위 다섯 부서아이디, 부서명, 인원수 목록 출력
-
+--5건
 
  
 --20. 부서별, 직책별 평균 급여를 구하여라.
 --   부서이름, 직책이름, 평균급여 소수점 둘째자리에서 반올림으로 구하여라.
-
+--19건
 
 
 --21.각 부서의 정보를 부서매니저 이름과 함께 출력(부서는 모두 출력되어야 함)
-
+--27건
 
  
 --22. 부서가 가장 많은 도시이름을 출력
@@ -172,6 +199,7 @@ SELECT e.EMPLOYEE_ID
 
 
 --23. 부서가 없는 도시 목록 출력
+--16건
 --조인사용
 
 --집합연산 사용
@@ -184,16 +212,17 @@ SELECT e.EMPLOYEE_ID
 
 
 --25. Finance 부서의 평균 급여보다 높은 급여를 받는 직원의 목록 출력
-
+--28건
 
 -- 26. 각 부서별 인원수를 출력하되, 인원이 없는 부서는 0으로 나와야 하며
 --     부서는 정식 명칭으로 출력하고 인원이 많은 순서로 정렬.
-
+--27건
 
 
 --27. 지역별 등록된 나라의 갯수 출력(지역이름, 등록된 나라의 갯수)
-
+--4건
 
 
  
 --28. 가장 많은 나라가 등록된 지역명 출력
+--1건
