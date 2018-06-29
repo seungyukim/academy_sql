@@ -54,6 +54,7 @@ SELECT e.EMPLOYEE_ID "사번"
 ;
 
 --4. Finance 부서에 소속된 직원의 목록 조회
+--6건
 --조인으로 해결
 SELECT e.EMPLOYEE_ID
       ,e.LAST_NAME
@@ -61,12 +62,33 @@ SELECT e.EMPLOYEE_ID
   FROM employees e
       ,departments d
  WHERE e.DEPARTMENT_ID = d.DEPARTMENT_ID
+   AND d.DEPARTMENT_NAME = 'Finance'
 ;
-
+/*
+108	Greenberg	Finance
+109	Faviet	    Finance
+110	Chen	    Finance
+111	Sciarra	    Finance
+112	Urman	    Finance
+113	Popp	Finance
+*/
 --서브쿼리로 해결
-
-
---6건
+SELECT e.EMPLOYEE_ID
+      ,e.LAST_NAME
+      ,e.DEPARTMENT_ID
+  FROM employees e
+ WHERE e.DEPARTMENT_ID = (SELECT d.DEPARTMENT_ID
+                            FROM departments d
+                           WHERE d.DEPARTMENT_NAME = 'Finance') 
+;
+/*
+108	Greenberg	100
+109	Faviet	    100
+110	Chen	    100
+111	Sciarra	    100
+112	Urman	    100
+113	Popp	    100
+*/
  
 --5. Steven King 의 직속 부하직원의 모든 정보를 조회
 --14건
