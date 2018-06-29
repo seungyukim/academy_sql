@@ -668,3 +668,34 @@ ALTER TABLE sub_table ADD
 ( CONSTRAINT fk_sub_table FOREIGN KEY (id) REFERENCES main_table(id)
  ,CONSTRAINT pk_sub_table PRIMARY KEY (id, sub_code)
 );  
+
+--- 테이블 이름의 변경 : RENAME
+-- ojung_member ====> member_of_ojung
+RENAME ojung_member TO member_of_ojung;
+-- 테이블 이름이 변경되었습니다.
+DESC ojung_member;
+DESC member_of_ojung;
+RENAME member_of_ojung TO ojung_member;
+
+--- 테이블 삭제 : DROP
+DROP TABLE main_table;
+-- ORA-02449: unique/primary keys in table referenced by foreign keys
+-- sub_table 의 id 컬럼이 main_table의 id 컬럼을 참조하기 때문
+-- 테이블 삭제에 순서가 필요
+
+--참조 관계에 상관없이 테이블 바로 삭제
+DROP TABLE main_table CASCADE CONSTRAINT;
+-- sub_table 과의 참조 관계가 끊어지며 바로 삭제됨.
+
+-- 생성된 제약조건 확인 쿼리
+SELECT u.CONSTRAINT_NAME
+      ,u.CONSTRAINT_TYPE
+      ,u.TABLE_NAME
+  FROM user_constraints u
+ WHERE u.TABLE_NAME IN ('MAIN_TABLE', 'SUB_TABLE') 
+;
+/* -- sub_table 에 생성되어 있던 R이 같이 제거 되었음을 확인
+-------------------------------------------------------
+SYS_C007037 	C	SUB_TABLE
+PK_SUB_TABLE	P	SUB_TABLE
+*/
